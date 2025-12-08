@@ -1,53 +1,64 @@
 package org.practice.gltp_practice.Service;
 
-import org.practice.gltp_practice.Entity.Goal;
-import org.practice.gltp_practice.Repository.GoalRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-
-import java.util.List;
-import java.util.Optional;
 
 // Goal Service
 // create a goal, view all goal, rename and delete a goal
 
+
+import org.practice.gltp_practice.Entity.Goal;
+import org.practice.gltp_practice.Repository.GoalRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class GoalService{
 
-    private GoalRepository goalRepo;
+    private GoalRepository repo;
 
-    GoalService(GoalRepository goalRepo){
-        this.goalRepo = goalRepo;
+    GoalService(GoalRepository repo){
+        this.repo = repo;
     }
 
     public Goal createGoal(Goal goal){
-        return goalRepo.save(goal);
+        return repo.save(goal);
     }
 
     public List<Goal> viewAllGoal(){
-        return goalRepo.findAll();
+        return repo.findAll();
     }
 
     public Goal renameGoal(long goalId, String newTitle){
-        Goal goal = goalRepo.findById(goalId)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found"));
+
+        Goal goal = repo.findById(goalId)
+                .orElseThrow(()-> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,"Goal Id not found"));
+
         goal.setGoalTitle(newTitle);
-        return goalRepo.save(goal);
+        return repo.save(goal);
     }
 
-    public void deleteGoalById(long goalId){
+    public void deleteGoal(long goalId){
 
-        if(!goalRepo.existsById(goalId)){
-                    throw new ResponseStatusException(
-                            HttpStatus.NOT_FOUND,"Goal Id not found");
+        Optional<Goal> goal = repo.findById(goalId);
+
+        if(goal.isPresent()){
+            repo.deleteById(goalId);
         }else{
-            goalRepo.deleteById(goalId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found");
         }
-    }
-}
 
+    }
+
+
+
+
+}
 
 
 

@@ -8,14 +8,13 @@ import lombok.Data;
 // id and Goal title
 
 @Data
-@AllArgsConstructor // ask
+@AllArgsConstructor
 public class GoalResponseDto{
 
-    private long id;
+    private long Id;
     private String goalTitle;
 
 }
-
 
 
 

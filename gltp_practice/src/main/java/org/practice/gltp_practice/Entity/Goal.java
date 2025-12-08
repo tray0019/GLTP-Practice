@@ -15,14 +15,11 @@ import lombok.Data;
 public class Goal{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long goalId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long Id;
 
     private String goalTitle;
-
-
 }
-
 
 
 

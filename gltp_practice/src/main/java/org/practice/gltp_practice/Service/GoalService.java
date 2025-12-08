@@ -10,6 +10,64 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+// Goal Service
+// create a goal, view all goal, rename and delete a goal
+
+@Service
+public class GoalService{
+
+    private GoalRepository goalRepo;
+
+    GoalService(GoalRepository goalRepo){
+        this.goalRepo = goalRepo;
+    }
+
+    public Goal createGoal(Goal goal){
+        return goalRepo.save(goal);
+    }
+
+    public List<Goal> viewAllGoal(){
+        return goalRepo.findAll();
+    }
+
+    public Goal renameGoal(long goalId, String newTitle){
+        Goal goal = goalRepo.findById(goalId)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found"));
+        goal.setGoalTitle(newTitle);
+        return goalRepo.save(goal);
+    }
+
+    public void deleteGoalById(long goalId){
+
+        if(!goalRepo.existsById(goalId)){
+                    throw new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,"Goal Id not found");
+        }else{
+            goalRepo.deleteById(goalId);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 @Service
 public class GoalService {
 
@@ -60,5 +118,6 @@ public class GoalService {
     }
 
 }
+ */
 
 

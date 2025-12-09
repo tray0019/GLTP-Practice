@@ -6,7 +6,7 @@ package org.practice.gltp_practice.Controller;
 // create a goal, get all goal, rename all goal, delete all goal
 // use dto
 
-import jakarta.validation.Valid;
+
 import org.practice.gltp_practice.Dto.GoalCreateDto;
 import org.practice.gltp_practice.Dto.GoalResponseDto;
 import org.practice.gltp_practice.Entity.Goal;
@@ -26,7 +26,7 @@ public class GoalController{
     }
 
     @PostMapping("/goals")
-    public GoalResponseDto createGoal(@Valid @RequestBody GoalCreateDto dto){
+    public GoalResponseDto createGoal(@RequestBody GoalCreateDto dto){
         Goal goal = new Goal();
         goal.setGoalTitle(dto.getGoalTitle());
         Goal save = service.createGoal(goal);
@@ -35,7 +35,7 @@ public class GoalController{
 
     @GetMapping("/goals")
     public List<GoalResponseDto> viewAllGoal(){
-        List<Goal> goals =  service.viewAllGoal();
+        List<Goal> goals = service.viewAllGoal();
         List<GoalResponseDto> dtoList = new ArrayList<>();
 
         for(Goal goal: goals){
@@ -56,9 +56,7 @@ public class GoalController{
         service.deleteGoal(goalId);
     }
 
-
 }
-
 
 
 

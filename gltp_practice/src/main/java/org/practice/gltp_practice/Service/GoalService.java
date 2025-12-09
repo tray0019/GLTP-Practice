@@ -5,16 +5,16 @@ package org.practice.gltp_practice.Service;
 // Goal Service
 // create a goal, view all goal, rename and delete a goal
 
-
+import org.practice.gltp_practice.Dto.GoalCreateDto;
+import org.practice.gltp_practice.Dto.GoalResponseDto;
 import org.practice.gltp_practice.Entity.Goal;
 import org.practice.gltp_practice.Repository.GoalRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GoalService{
@@ -35,35 +35,25 @@ public class GoalService{
 
     public Goal renameGoal(long goalId, String newTitle){
 
-        Goal goal = repo.findById(goalId)
-                .orElseThrow(()-> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,"Goal Id not found"));
-
-        goal.setGoalTitle(newTitle);
+         Goal goal = repo.findById(goalId)
+                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found")) ;
+         goal.setGoalTitle(newTitle);
         return repo.save(goal);
     }
 
     public void deleteGoal(long goalId){
 
-        Optional<Goal> goal = repo.findById(goalId);
+        Goal goal = new Goal();
 
-        if(goal.isPresent()){
-            repo.deleteById(goalId);
+        if(!repo.existsById(goalId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal Id not found");
         }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found");
+            repo.deleteById(goalId);
         }
 
     }
 
-
-
-
 }
-
-
-
-
-
 
 
 

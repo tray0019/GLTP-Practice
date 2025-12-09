@@ -1,11 +1,10 @@
 package org.practice.gltp_practice.Dto;
+//Goal Response
+// id and Goal title
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-
-//Goal Response
-// id and Goal title
 
 @Data
 @AllArgsConstructor

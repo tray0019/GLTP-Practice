@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,19 +33,18 @@ public class GoalService{
     }
 
     public Goal renameGoal(long goalId, String newTitle){
+        Goal goal = repo.findById(goalId)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found"));
 
-         Goal goal = repo.findById(goalId)
-                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found")) ;
-         goal.setGoalTitle(newTitle);
+        goal.setGoalTitle(newTitle);
+
         return repo.save(goal);
     }
 
     public void deleteGoal(long goalId){
 
-        Goal goal = new Goal();
-
         if(!repo.existsById(goalId)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal Id not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found");
         }else{
             repo.deleteById(goalId);
         }

@@ -10,7 +10,8 @@ import lombok.Data;
 // class Goal
 // id and Goal title
 
-@Entity(name="glpt_practice")
+
+@Entity(name="gltp_practice")
 @Data
 public class Goal{
 
@@ -19,11 +20,7 @@ public class Goal{
     private long Id;
 
     private String goalTitle;
-
 }
-
-
-
 
 
 

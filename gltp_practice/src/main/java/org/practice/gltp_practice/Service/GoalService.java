@@ -18,40 +18,50 @@ import java.util.List;
 @Service
 public class GoalService{
 
-    private GoalRepository repo;
+    private GoalRepository goalRepo;
 
-    GoalService(GoalRepository repo){
-        this.repo = repo;
+    GoalService(GoalRepository goalRepo){
+        this. goalRepo = goalRepo;
     }
 
     public Goal createGoal(Goal goal){
-        return repo.save(goal);
+        return goalRepo.save(goal);
     }
 
     public List<Goal> viewAllGoal(){
-        return repo.findAll();
+        return goalRepo.findAll();
     }
-
     public Goal renameGoal(long goalId, String newTitle){
-        Goal goal = repo.findById(goalId)
+        Goal goal = goalRepo.findById(goalId)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found"));
-
         goal.setGoalTitle(newTitle);
-
-        return repo.save(goal);
+        return goalRepo.save(goal);
     }
 
     public void deleteGoal(long goalId){
-
-        if(!repo.existsById(goalId)){
+        if(!goalRepo.existsById(goalId)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found");
         }else{
-            repo.deleteById(goalId);
+            goalRepo.deleteById(goalId);
         }
-
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

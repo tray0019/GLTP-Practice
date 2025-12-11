@@ -7,6 +7,7 @@ package org.practice.gltp_practice.Controller;
 // use dto
 
 
+import jakarta.validation.Valid;
 import org.practice.gltp_practice.Dto.GoalCreateDto;
 import org.practice.gltp_practice.Dto.GoalResponseDto;
 import org.practice.gltp_practice.Entity.Goal;
@@ -19,23 +20,23 @@ import java.util.List;
 @RestController
 public class GoalController{
 
-    private GoalService service;
+    private GoalService goalService;
 
-    GoalController(GoalService service){
-        this.service = service;
+    GoalController(GoalService goalService){
+        this.goalService = goalService;
     }
 
     @PostMapping("/goals")
-    public GoalResponseDto createGoal(@RequestBody GoalCreateDto dto){
-        Goal goal = new Goal();
-        goal.setGoalTitle(dto.getGoalTitle());
-        Goal save = service.createGoal(goal);
-        return new GoalResponseDto(save.getId(), save.getGoalTitle());
+    public GoalResponseDto getCreateGoal(@Valid @RequestBody GoalCreateDto dto){
+            Goal goal = new Goal();
+            goal.setGoalTitle(dto.getGoalTitle());
+            Goal save = goalService.createGoal(goal);
+            return new GoalResponseDto(save.getId(),save.getGoalTitle());
     }
 
     @GetMapping("/goals")
-    public List<GoalResponseDto> getAllGoal(){
-        List<Goal> goals = service.viewAllGoal();
+    public List<GoalResponseDto> getViewAllGoal(){
+        List<Goal> goals = goalService.viewAllGoal();
         List<GoalResponseDto> dtoList = new ArrayList<>();
 
         for(Goal goal: goals){
@@ -45,18 +46,42 @@ public class GoalController{
         return dtoList;
     }
 
-    @PutMapping("goals/{goalId}")
+    @PutMapping("/goals/{goalId}")
     public GoalResponseDto getRenameGoal(@PathVariable long goalId, @RequestParam String newTitle){
-        Goal goal = service.renameGoal(goalId, newTitle);
+        Goal goal = goalService.renameGoal(goalId,newTitle);
         return new GoalResponseDto(goal.getId(), goal.getGoalTitle());
     }
 
     @DeleteMapping("/goals/{goalId}")
-    public void deleteGoal(@PathVariable long goalId){
-        service.deleteGoal(goalId);
+    public void getDeleteGoal(@PathVariable long goalId){
+        goalService.deleteGoal(goalId);
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

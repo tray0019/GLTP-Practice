@@ -3,6 +3,7 @@ package org.practice.gltp_practice.Dto;
 // id and Goal title
 
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,9 +12,27 @@ import lombok.Data;
 public class GoalResponseDto{
 
     private long Id;
+
+
     private String goalTitle;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

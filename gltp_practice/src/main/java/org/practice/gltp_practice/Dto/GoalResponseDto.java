@@ -11,8 +11,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class GoalResponseDto{
 
-    private long Id;
-
+    private long goalId;
 
     private String goalTitle;
 

@@ -18,10 +18,10 @@ import java.util.List;
 @Service
 public class GoalService{
 
-    private GoalRepository goalRepo;
+    private final GoalRepository goalRepo;
 
     GoalService(GoalRepository goalRepo){
-        this. goalRepo = goalRepo;
+        this.goalRepo = goalRepo;
     }
 
     public Goal createGoal(Goal goal){
@@ -31,12 +31,14 @@ public class GoalService{
     public List<Goal> viewAllGoal(){
         return goalRepo.findAll();
     }
+
     public Goal renameGoal(long goalId, String newTitle){
         Goal goal = goalRepo.findById(goalId)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found"));
         goal.setGoalTitle(newTitle);
         return goalRepo.save(goal);
     }
+
 
     public void deleteGoal(long goalId){
         if(!goalRepo.existsById(goalId)){
@@ -47,7 +49,6 @@ public class GoalService{
     }
 
 }
-
 
 
 

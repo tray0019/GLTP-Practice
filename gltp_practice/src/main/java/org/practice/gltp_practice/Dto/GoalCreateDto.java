@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class GoalCreateDto{
 
-
     @NotBlank(message = "Goal Title is mandatory")
     private String goalTitle;
+
 }
 
 

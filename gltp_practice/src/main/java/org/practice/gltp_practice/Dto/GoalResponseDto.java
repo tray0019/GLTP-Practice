@@ -1,18 +1,13 @@
 package org.practice.gltp_practice.Dto;
-//Goal Response
-// id and Goal title
 
-
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 @AllArgsConstructor
+@Data
 public class GoalResponseDto{
 
-    private long goalId;
-
+    private long Id;
     private String goalTitle;
 
 }

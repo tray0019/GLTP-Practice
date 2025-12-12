@@ -1,12 +1,6 @@
 package org.practice.gltp_practice.Service;
 
 
-
-// Goal Service
-// create a goal, view all goal, rename and delete a goal
-
-import org.practice.gltp_practice.Dto.GoalCreateDto;
-import org.practice.gltp_practice.Dto.GoalResponseDto;
 import org.practice.gltp_practice.Entity.Goal;
 import org.practice.gltp_practice.Repository.GoalRepository;
 import org.springframework.http.HttpStatus;
@@ -38,7 +32,6 @@ public class GoalService{
         goal.setGoalTitle(newTitle);
         return goalRepo.save(goal);
     }
-
 
     public void deleteGoal(long goalId){
         if(!goalRepo.existsById(goalId)){

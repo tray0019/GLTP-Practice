@@ -9,8 +9,8 @@ flowchart TD
 
         subgraph CTRL["Controller Layer"]
             GC["GoalController"]
-            EC["EntryController (future)"]
-            GCC["GoalCheckController (future)"]
+            EC["EntryController"]
+            GCC["GoalCheckController"]
         end
 
         subgraph DTO["DTO Layer"]
@@ -20,19 +20,19 @@ flowchart TD
 
         subgraph SRV["Service Layer"]
             GS["GoalService"]
-            ES["EntryService (future)"]
-            GCS["GoalCheckService (future)"]
+            ES["EntryService"]
+            GCS["GoalCheckService"]
         end
 
         subgraph ENT["Entity Layer (JPA)"]
             EGoal["Goal Entity"]
-            EEntry["Entry Entity (future)"]
-            ECheck["GoalCheck Entity (future)"]
+            EEntry["Entry Entity"]
+            ECheck["GoalCheck Entity"]
         end
 
         subgraph REP["Repository Layer"]
             GR["GoalRepository"]
-            ER["EntryRepository (future)"]
+            ER["EntryRepository"]
             GCR["GoalCheckRepository"]
         end
 

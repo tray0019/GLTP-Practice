@@ -6,20 +6,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+
 @Data
 @Entity(name="gltp_practice")
 public class Goal{
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long Id;
-
     private String goalTitle;
-
-
 }
-
-
 
 
 

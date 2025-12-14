@@ -1,6 +1,7 @@
 package org.practice.gltp_practice.Service;
 
 
+import lombok.AllArgsConstructor;
 import org.practice.gltp_practice.Entity.Goal;
 import org.practice.gltp_practice.Repository.GoalRepository;
 import org.springframework.http.HttpStatus;

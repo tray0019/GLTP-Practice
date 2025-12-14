@@ -2,10 +2,12 @@ package org.practice.gltp_practice.Controller;
 
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.practice.gltp_practice.Dto.GoalCreateDto;
 import org.practice.gltp_practice.Dto.GoalResponseDto;
 import org.practice.gltp_practice.Entity.Goal;
 import org.practice.gltp_practice.Service.GoalService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,29 +22,6 @@ public class GoalController{
         this.goalService = goalService;
     }
 
-    @DeleteMapping("/goals/{goalId}")
-    public void deleteGoal(@PathVariable long goalId){
-        goalService.deleteGoal(goalId);
-    }
-
-    @PutMapping("/goals/{goalId}")
-    public GoalResponseDto renameGoal(@PathVariable long goalId, @RequestParam String newTitle){
-        Goal goal = goalService.renameGoal(goalId, newTitle);
-        return new GoalResponseDto(goal.getId(),goal.getGoalTitle());
-    }
-
-    @GetMapping("/goals")
-    public List<GoalResponseDto> getAllGoal(){
-        List<Goal> goals = goalService.viewAllGoal();
-        List<GoalResponseDto> dtoList = new ArrayList<>();
-
-        for(Goal goal: goals){
-            GoalResponseDto dto = new GoalResponseDto(goal.getId(),goal.getGoalTitle());
-            dtoList.add(dto);
-        }
-        return dtoList;
-    }
-
     @PostMapping("/goals")
     public GoalResponseDto createGoal(@Valid @RequestBody GoalCreateDto dto){
         Goal goal = new Goal();
@@ -51,8 +30,28 @@ public class GoalController{
         return new GoalResponseDto(save.getId(), save.getGoalTitle());
     }
 
+    @GetMapping("/goals")
+    public List<GoalResponseDto> viewAllGoal(){
+        List<Goal> goals = goalService.viewAllGoal();
+        List<GoalResponseDto> dtoList = new ArrayList<>();
 
+        for(Goal goal: goals){
+            GoalResponseDto dto = new GoalResponseDto(goal.getId(), goal.getGoalTitle());
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
 
+    @PutMapping("/goals/{goalId}")
+    public GoalResponseDto renameGoal(@PathVariable long goalId, @RequestParam String newTitle){
+        Goal goal = goalService.renameGoal(goalId,newTitle);
+        return new GoalResponseDto(goal.getId(),goal.getGoalTitle());
+    }
+
+    @DeleteMapping("/goals/{goalId}")
+    public void deleteGoal(@PathVariable long goalId){
+        goalService.deleteGoal(goalId);
+    }
 }
 
 

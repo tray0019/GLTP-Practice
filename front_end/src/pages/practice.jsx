@@ -17,7 +17,6 @@ function App() {
       setGoals(res.data);
     }).catch(err => {
       console.error(err);
-
     });
   },[]);
 

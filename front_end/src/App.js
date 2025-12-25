@@ -1,115 +1,114 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-
 function App(){
+  
+  const [goals, setGoals] = useState([]);
+  const [newGoalTitle, setNewGoalTitle] = useState("");
+  const [selectedGoal, setSelectedGoal] = useState([]);
 
-  const [goal, setGoals] = useState([]);
-  const [ newGoalTitle, setNewGoalTitle] = useState("");
-  const [selectedGoal, setSelectedGoal] = useState(null);
-
-   useEffect(()=>{
+  useEffect(function(){
     axios.get("http://localhost:8080/goals")
-      .then(res=>{
-        console.log("Api fetch:",res.data);
-          setGoals(res.data);
-      }).catch(err=>{
-        console.error(err);
-      });
-  },[]);
+    .then(res=>{
+      console.log("Fetch api", res.data);
+      setGoals(res.data);
+    }).catch(err =>{
+      console.error(err);
+    });
+  },[])
 
   function handleAddGoal(){
-
     if(!newGoalTitle.trim){
-      alert("Please enter a goal title");
+      alert("Enter goal title");
       return;
     }
 
-    axios.post("http://localhost:8080/goals",
-      {goalTitle: newGoalTitle }
-    ).then(res=>{
-      console.log("Goal Created",res.data);
+    axios.post("http://localhost:8080/goals",{
+      goalTitle: newGoalTitle
+  })
+      .then(res=>{
+      console.log("Goal created", res.data);
       setNewGoalTitle("");
 
       axios.get("http://localhost:8080/goals")
-      .then(res2=>{
-        console.log("Api fetch:",res2.data);
-          setGoals(res2.data);
-      }).catch(err=>{
-        console.error("Error refreshing goals:",err);
-      });
+    .then(res2=>{
+      console.log("Fetch api", res2.data);
+      setGoals(res2.data);
+    }).catch(err2 =>{
+      console.error(err2);
+    });
+      
 
-    }).catch(err=>{
-      console.error("Error created goal:",err);
+    }).catch(err =>{
+      console.error(err);
     })
   }
 
-  function handleDeleteGoal(goalId){
-    axios.delete("http://localhost:8080/goals/"+goalId)
-      .then(()=>{
-        console.log("Goal deleted:",goalId);
-        
-        if(selectedGoal && selectedGoal.id === goalId){
-          setSelectedGoal(null);
-        }
+  function handledelete(goalId){
 
-        axios.get("http://localhost:8080/goals")
-      .then(res2=>{
-        console.log("Api fetch:",res2.data);
-          setGoals(res2.data);
-      }).catch(err=>{
-        console.error("Error refreshing goals:",err);
-      });
-
-      })
+      axios.delete("http://localhost:8080/goals/"+goalId)
+        .then(res=>{
+          console.log("Goal deleted",res.data);
+          
+          axios.get("http://localhost:8080/goals")
+    .then(res2=>{
+      console.log("Fetch api", res2.data);
+      setGoals(res2.data);
+    })
+        }).catch(err =>{
+          console.error(err);
+        })
   }
 
   return(
-    <div style= {{ maxWidth: "600px", margin: "20px auto"}}>
+
+    <div style={{ maxWidth: "600px", margin:"20px auto"}}>
       <h1>Goals</h1>
-      
-      <div style={{ marginBottom: "15px"}}>
-        <h3>Add Goal</h3>
-        <input 
-        type="text"
-        placeholder="Enter goal title..." 
+      <div style={{ marginBottom: "10px"}}>
+        <h3>Add Goals</h3>
+        <input type="text"
+        placeholder="Enter goal title..."
         value={newGoalTitle}
         onChange={function(e){setNewGoalTitle(e.target.value)}}
-        style={{ width: "100%", padding: "10px", boxSizing: "border-box"}}
-         />
-
-         <button
-         onClick={handleAddGoal}
-         >Save Goal</button>
+        style={{ width:"100%", padding: "10px", boxSizing: "border-box"}} />
+        <button style={{ marginTop: "10px"}}
+        onClick={handleAddGoal}
+        >Save Goal</button>
       </div>
+      
+      <un style={{ listStyle: "none", padding: 0}}>
 
-      <ul style={{ listStyle: "none", padding: 0}}>
-        {goal.map(goal=>{
+        {goals.map(function(goal){
           return(
-            <li style={{ marginBottom: "15px" }}>
-              <div style={{
-                border: "2px solid #ddd",
-                padding: "15px",
-                boxShadow: "0 3px 4px rgba(1,1,1,1.1)",
-                backgroungColor: "#fff",
-                borderRadius: "15px"
-              }} >
-                <h3 style={{ margin: 0}}>
-                  {goal.goalTitle}</h3>
-                <button>View</button>
-                <button style={{ marginLeft: "10px"}}
-                onClick={function(){
-                  if(window.confirm("Are you sure?"))
-                    handleDeleteGoal(goal.id);
-                }}
-                >Delete</button>
-              </div>
-            </li>
+           <li style={{ marginBottom: "12px"}}>
+             <div style={{
+              border: "2px solid #ddd",
+              padding: "16px",
+              boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+              borderRadius: "10px",
+              backgroundColor: "#ffff"
+            }}>
+              
+                <h3 style={{margin: 0}}>{goal.goalTitle} </h3>
+              
+              <button>View</button>
+              <button style={{marginLeft: "10px"}}
+              onClick={function(){
+                if(window.confirm("Are you sure?"))
+                  handledelete(goal.id);
+              }}
+              >Delete</button>
+            </div>
+           </li>
+
           )
         })}
-      </ul>
+        
+
+      </un>
 
     </div>
+
   )
 
 }

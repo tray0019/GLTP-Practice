@@ -30,6 +30,7 @@ function App() {
       goalTitle: newGoalTitle
     }).then(res =>{
       console.log("Goal created", res.data);
+      setGoals(res.data);
       setNewGoalTitle("");
 
       axios.get("http://localhost:8080/goals")

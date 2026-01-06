@@ -1,4 +1,3 @@
-
 import {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -7,7 +6,7 @@ function App(){
   const [goals, setGoals] = useState([]);
   const [newGoalTitle, setNewGoalTitle] = useState("");
 
-  function fetchGoals(){
+  function fetchGoal(){
     axios.get(`http://localhost:8080/goals`)
       .then(res2=>{
         setGoals(res2.data);
@@ -17,70 +16,70 @@ function App(){
   }
 
   useEffect(()=>{
-    fetchGoals();
-  },[]);
+    fetchGoal();
+  },[])
 
   function handleAddGoal(){
+
     if(!newGoalTitle.trim()){
       alert("Enter goal title");
       return;
     }
+
     axios.post(`http://localhost:8080/goals`,{
       goalTitle: newGoalTitle
-    }).then(()=>{
-      fetchGoals();
+    }).then(res=>{
+      console.log(res);
+      fetchGoal();     
     }).catch(err=>{
       console.error(err);
     })
   }
 
-  function handleDeleteGoal(goalId){
+  function handleDelete(goalId){
     axios.delete(`http://localhost:8080/goals/${goalId}`)
       .then(()=>{
-        fetchGoals();
+        fetchGoal();
       })
   }
 
   return(
-    <div style={{maxWidth: "600px", margin: "20px auto"}}>
+    <div style={{maxWidth: "600px", margin: "19px auto"}} >
       <h1>Goals</h1>
-      <div>
+      <div style={{padding: 0}} >
         <h3>Add Goal</h3>
-        <input
+        <input style={{ width: "100%", padding: "5px" }} 
         placeholder="Enter goal title"
-        type="text"
         value={newGoalTitle}
-        onChange={(e)=>{setNewGoalTitle(e.target.value)}}
-        style={{width: "100%", padding: "4px"}} />
-        <button style={{marginTop: "9px"}}
-        onClick={handleAddGoal}
-        >Save goal</button>
+        onChange={(e)=>{setNewGoalTitle(e.target.value)}} />
+        <button style={{marginTop:"9px"}} 
+        onClick={handleAddGoal} >Save</button>
       </div>
-      <ul style={{ listStyle: "none", padding: 0}}>
+
+      <ul style={{listStyle: "none", padding: 0}} >  
         {goals.map(goal=>{
           return(
-          <li style={{marginBottom: "9px"}}>
-          <div style={{
-            border: "solid 1px #ddd",
-            padding: "19px",
-            boxShadow: "0 3px 4px rgba(0,0,0,0.1)",
-            backgroundColor: "#fff",
-            borderRadius: "9px"
-          }} >
+            <li style={{marginBottom: "9px"}} >
+            <div style={{
+              border: "1px solid #ddd",
+              boxShadow: "0 3px 5px rgba(0,0,0,0.1)",
+              backgroundColor: "#fff",
+              padding: "10px",
+              borderRadius: "10px"
+            }} >
+              <h3>{goal.goalTitle}</h3>
+              <button>View</button>
+              <button style={{marginLeft: "9px"}}
+              onClick={function(){if(window.confirm("Are you sure?"))
+                {handleDelete(goal.id)}
+              }}
+               >Delete</button>
 
-            <h3>{goal.goalTitle}</h3>
-            <button>View</button>
-            <button style={{marginLeft: "9px"}}
-             onClick={()=>{
-              if(window.confirm("Are you sure?"))
-                handleDeleteGoal(goal.id);
-             }}>Delete</button>
-          </div>
-        </li>
+            </div>
+          </li>
           )
         })}
       </ul>
-      
     </div>
   )
 

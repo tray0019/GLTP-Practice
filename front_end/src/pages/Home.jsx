@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
-import AddGoalForm from "../components/AddGoalForm"
+import AddGoalForm from "../components/AddGoalForm";
+import GoalCard from "../components/GoalCard";
 
 import { createGoal, getAllGoals } from "../api/goalApi";
 
@@ -48,14 +49,11 @@ function Home(){
             <ul>
                 {goals.map(goal=>{
                     return(
-                    <li>
-                        <div style={{
-                            border: "1px solid #ddd"
-                        }}>
-                        <h3>{goal.goalTitle}</h3>
-
-                        </div>
-                    </li>
+                        <li style={{ marginBottom: "9px"}}>
+                             <GoalCard
+                        goal={goal}
+                    />
+                        </li>
                     )
                 })}
 

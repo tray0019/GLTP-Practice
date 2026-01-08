@@ -2,10 +2,11 @@ import {useState, useEffect} from "react";
 import AddGoalForm from "../components/AddGoalForm";
 import GoalCard from "../components/GoalCard";
 
-import { createGoal, getAllGoals } from "../api/goalApi";
+import { createGoal, getAllGoals, deleteGoal } from "../api/goalApi";
 
 function Home(){
     const [goals, setGoals] = useState([]);
+    const [isLoadingGoals, setIsLoadingGoals] = useState(false);
 
     function fetchData(){
         getAllGoals().then(res=>{
@@ -14,29 +15,33 @@ function Home(){
             console.error(err);
         })
     }
-    
+
     useEffect(()=>{
         fetchData();
     },[]);
 
-    const [isLoadingGoals, setIsLoadingGoals] = useState(false);
+    
 
     const loadGoals = async() =>{
         try{
          setIsLoadingGoals(true);
          
-
         }catch(err){
-
         }finally{
-
         }
     }
-
     const handleAddGoal = async (title) => {
         try{
             await createGoal(title);
+        }catch(err){
+            console.error(err);
+        }
+    }
 
+    const handleDeleteGoal = async function(goalId) {
+        try{
+            await deleteGoal(goalId);
+            await fetchData();
         }catch(err){
             console.error(err);
         }
@@ -46,21 +51,18 @@ function Home(){
         <div>
             <h1>Goals</h1>
             <AddGoalForm onAdd={handleAddGoal}/>
-            <ul>
+            <ul style={{listStyle: "none"}} >
                 {goals.map(goal=>{
                     return(
                         <li style={{ marginBottom: "9px"}}>
-                             <GoalCard
-                        goal={goal}
-                    />
+                        <GoalCard goal={goal}
+                        onDelete={handleDeleteGoal} />
                         </li>
                     )
                 })}
-
             </ul>
         </div>
     )
-
 }
 
 export default Home;

@@ -15,6 +15,21 @@ function AddGoalForm({ onAdd }){
         onAdd(title.trim());
         setTitle("");
     };
+
+    return(
+        <div>
+            <h3>Add Goal</h3>
+            <form onSubmit={handleSubmit}>
+                <input 
+                type="text"
+                placeholder="Enter goal title..."
+                value={title}
+                onChange={(e)=>{setTitle(e.target.value)}}
+                 />
+                 <button onClick="submit" >Save</button>
+            </form>
+        </div>
+    )
     
 }
 

@@ -33,6 +33,7 @@ function Home(){
     const handleAddGoal = async (title) => {
         try{
             await createGoal(title);
+            await fetchData();
         }catch(err){
             console.error(err);
         }

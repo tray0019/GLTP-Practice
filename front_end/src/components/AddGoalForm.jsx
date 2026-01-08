@@ -26,7 +26,7 @@ function AddGoalForm({ onAdd }){
                 value={title}
                 onChange={(e)=>{setTitle(e.target.value)}}
                  />
-                 <button onClick="submit" >Save</button>
+                 <button type="submit" >Save</button>
             </form>
         </div>
     )

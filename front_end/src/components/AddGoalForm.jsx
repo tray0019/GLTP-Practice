@@ -17,7 +17,7 @@ function AddGoalForm({ onAdd }){
     };
 
     return(
-        <div>
+        <div className="add-goal-form">
             <h3>Add Goal</h3>
             <form onSubmit={handleSubmit}>
                 <input 

@@ -3,6 +3,7 @@ import AddGoalForm from "../components/AddGoalForm";
 import GoalCard from "../components/GoalCard";
 
 import { createGoal, getAllGoals, deleteGoal } from "../api/goalApi";
+import "../styles.css";
 
 function Home(){
     const [goals, setGoals] = useState([]);
@@ -49,10 +50,10 @@ function Home(){
     }
 
     return(
-        <div>
+        <div className="app-container">
             <h1>Goals</h1>
             <AddGoalForm onAdd={handleAddGoal}/>
-            <ul style={{listStyle: "none"}} >
+            <ul className="goal-list" >
                 {goals.map(goal=>{
                     return(
                         <li style={{ marginBottom: "9px"}}>

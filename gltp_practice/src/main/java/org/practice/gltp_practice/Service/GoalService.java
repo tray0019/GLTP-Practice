@@ -11,13 +11,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class GoalService{
 
     private final GoalRepository goalRepo;
-
-    GoalService(GoalRepository goalRepo){
-        this.goalRepo = goalRepo;
-    }
 
     public Goal createGoal(Goal goal){
         return goalRepo.save(goal);
@@ -34,7 +31,7 @@ public class GoalService{
         return goalRepo.save(goal);
     }
 
-    public void deleteGoal(long goalId){
+    public void delete(long goalId){
         if(!goalRepo.existsById(goalId)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found");
         }else{
@@ -43,7 +40,6 @@ public class GoalService{
     }
 
 }
-
 
 
 

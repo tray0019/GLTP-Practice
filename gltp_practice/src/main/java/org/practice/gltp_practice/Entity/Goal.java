@@ -10,12 +10,14 @@ import lombok.Data;
 @Data
 @Entity(name="gltp_practice")
 public class Goal{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Id;
-    private String goalTitle;
-}
+    private long id;
 
+    private String goalTitle;
+
+}
 
 
 

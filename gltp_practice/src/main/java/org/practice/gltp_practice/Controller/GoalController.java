@@ -13,17 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@AllArgsConstructor
 public class GoalController{
 
     private final GoalService goalService;
 
-    GoalController(GoalService goalService){
-        this.goalService = goalService;
-    }
-
     @PostMapping("/goals")
-    public GoalResponseDto createGoal(@Valid @RequestBody GoalCreateDto dto){
+    public GoalResponseDto createGoal(@RequestBody GoalCreateDto dto){
         Goal goal = new Goal();
         goal.setGoalTitle(dto.getGoalTitle());
         Goal save = goalService.createGoal(goal);
@@ -31,29 +29,29 @@ public class GoalController{
     }
 
     @GetMapping("/goals")
-    public List<GoalResponseDto> viewAllGoal(){
+    public List<GoalResponseDto> viewAllGoals(){
         List<Goal> goals = goalService.viewAllGoal();
         List<GoalResponseDto> dtoList = new ArrayList<>();
-
         for(Goal goal: goals){
             GoalResponseDto dto = new GoalResponseDto(goal.getId(), goal.getGoalTitle());
             dtoList.add(dto);
         }
+
         return dtoList;
     }
 
     @PutMapping("/goals/{goalId}")
     public GoalResponseDto renameGoal(@PathVariable long goalId, @RequestParam String newTitle){
         Goal goal = goalService.renameGoal(goalId,newTitle);
-        return new GoalResponseDto(goal.getId(),goal.getGoalTitle());
+        return new GoalResponseDto(goal.getId(), goal.getGoalTitle());
     }
 
     @DeleteMapping("/goals/{goalId}")
     public void deleteGoal(@PathVariable long goalId){
-        goalService.deleteGoal(goalId);
+        goalService.delete(goalId);
     }
-}
 
+}
 
 
 

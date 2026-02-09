@@ -25,7 +25,6 @@ public interface GoalRepository extends JpaRepository<Goal, Long>{
 
 
 
-
 /*
 @Repository
 public interface GoalRepository extends JpaRepository<Goal, Long> {

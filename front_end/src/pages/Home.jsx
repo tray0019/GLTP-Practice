@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import AddGoalForm from "../components/AddGoalForm";
 import GoalCard from "../components/GoalCard";
+import GlobalYearCalendar from "../components/GlobalYearCalendar";
 
 import { createGoal, getAllGoals, deleteGoal } from "../api/goalApi";
 import "../styles.css";
@@ -8,6 +9,7 @@ import "../styles.css";
 function Home(){
     const [goals, setGoals] = useState([]);
     const [isLoadingGoals, setIsLoadingGoals] = useState(false);
+    const [globalContributions, setGlobalContributions] = useState([]);
 
     function fetchData(){
         getAllGoals().then(res=>{
@@ -52,6 +54,7 @@ function Home(){
     return(
         <div className="app-container">
             <h1>Goals</h1>
+            <GlobalYearCalendar contribution={globalContributions}/>
             <AddGoalForm onAdd={handleAddGoal}/>
             <ul className="goal-list" >
                 {goals.map(goal=>{

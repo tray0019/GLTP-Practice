@@ -29,6 +29,9 @@ public class User {
 
     //Gender
 
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @Column(nullable = false, unique = true)
     private String email; //include DB email - missing EqualsAndHash
 

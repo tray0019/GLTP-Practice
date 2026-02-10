@@ -16,6 +16,6 @@ public enum Difficulty {
         for(Difficulty d: values()){
             if(d.getValue() == value) return d;
         }
-        throw new IllegalCallerException("Invalid difficulty:"+value);
+        throw new IllegalArgumentException("Invalid difficulty:"+value);
     }
 }

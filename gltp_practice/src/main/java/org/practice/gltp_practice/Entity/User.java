@@ -27,8 +27,6 @@ public class User {
 
     private LocalDate birthDate;
 
-    //Gender
-
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

@@ -8,7 +8,7 @@ import lombok.Data;
 
 
 @Data
-@Entity(name="gltp_practice")
+@Entity(name="Goal")
 public class Goal{
 
     @Id

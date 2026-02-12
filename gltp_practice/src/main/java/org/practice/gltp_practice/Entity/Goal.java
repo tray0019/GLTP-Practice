@@ -11,7 +11,7 @@ import java.util.List;
 public class Goal{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String goalTitle;
@@ -23,7 +23,7 @@ public class Goal{
     private List<GoalCheck> checks;
 
     @Column(nullable = false)
-    private Integer postition;
+    private Integer position;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

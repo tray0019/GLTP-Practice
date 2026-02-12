@@ -1,10 +1,9 @@
 package org.practice.gltp_practice.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 
 @Data
@@ -17,6 +16,35 @@ public class Goal{
 
     private String goalTitle;
 
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ProgressEntry> entries;
+
+    @OneToMany(mappedBy = "goal",cascade = CascadeType.REMOVE, orphanRemoval = true )
+    private List<GoalCheck> checks;
+
+    @Column(nullable = false)
+    private Integer postition;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Difficulty difficulty = Difficulty.MEDIUM;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GoalStatus status = GoalStatus.ACTIVE;
+
+    @Column(nullable = false)
+    private boolean isAchievement;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = true)
+    private User user;
+
+    @Column(name="category")
+    private String category;
+
+    @Column(name="use_case")
+    private String useCase;
 }
 
 

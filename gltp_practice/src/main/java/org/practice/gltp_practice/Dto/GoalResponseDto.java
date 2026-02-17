@@ -16,6 +16,9 @@ public class GoalResponseDto{
     private String category;
     private String useCase;
 
+    /**
+     * Add comment to be "top-tier" hehe
+     */
     @Deprecated
     private boolean archive;
 

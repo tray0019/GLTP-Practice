@@ -3,6 +3,7 @@ package org.practice.gltp_practice.Service;
 
 import lombok.AllArgsConstructor;
 import org.practice.gltp_practice.Entity.Goal;
+import org.practice.gltp_practice.Entity.User;
 import org.practice.gltp_practice.Repository.GoalRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,23 +21,9 @@ public class GoalService{
         return goalRepo.save(goal);
     }
 
-    public List<Goal> viewAllGoal(){
-        return goalRepo.findAll();
-    }
 
-    public Goal renameGoal(long goalId, String newTitle){
-        Goal goal = goalRepo.findById(goalId)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found"));
-        goal.setGoalTitle(newTitle);
-        return goalRepo.save(goal);
-    }
-
-    public void delete(long goalId){
-        if(!goalRepo.existsById(goalId)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Goal Id not found");
-        }else{
-            goalRepo.deleteById(goalId);
-        }
+    public List<Goal> getActiveGoalsForUser(User user){
+        return repo.findBy
     }
 
 }

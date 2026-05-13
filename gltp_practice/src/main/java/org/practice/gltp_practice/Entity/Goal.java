@@ -1,51 +1,44 @@
 package org.practice.gltp_practice.Entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
 
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
 import java.util.List;
 
-
-@Data
 @Entity(name="Goal")
-public class Goal{
+@Getter
+@Setter
+@ToString(exclude = {"goal", "user", "recipient"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Goal implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String goalTitle;
 
     @OneToMany(mappedBy = "goal", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ProgressEntry> entries;
 
-    @OneToMany(mappedBy = "goal",cascade = CascadeType.REMOVE, orphanRemoval = true )
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<GoalCheck> checks;
 
     @Column(nullable = false)
     private Integer position;
 
+    @Column(nullable = false)
+    private boolean archived = false;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Difficulty difficulty = Difficulty.MEDIUM;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private GoalStatus status = GoalStatus.ACTIVE;
-
-    @Column(nullable = false)
-    private boolean isAchievement;
-
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable = true)
-    private User user;
-
-    @Column(name="category")
-    private String category;
-
-    @Column(name="use_case")
-    private String useCase;
-}
 
 
 
@@ -60,20 +53,5 @@ public class Goal{
 
 
 
-
-
-
-/*
-@Entity(name="gltp_practice")
-@Data
-public class Goal {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String goalTitle;
 
 }
- */
-
